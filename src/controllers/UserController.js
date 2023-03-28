@@ -6,4 +6,7 @@ module.exports = {
 
     return res.json(results);
   },
+  async create(req, res) {
+    await knex("users").insert;
+  },
 };
