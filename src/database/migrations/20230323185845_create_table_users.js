@@ -8,7 +8,7 @@ exports.up = async (knex) => {
     table.text("username").unique().notNullable();
 
     table.timestamp("create_at").defaultTo(knex.fn.now());
-    table.timestamp("create_at").defaultTo(knex.fn.now());
+    table.timestamp("update_at").defaultTo(knex.fn.now());
   });
 };
 
