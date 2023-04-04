@@ -36,7 +36,8 @@ module.exports = {
       const { title, user_id } = req.body;
 
       await knex("projects").insert({
-        tiiid,
+        title,
+        user_id,
       });
 
       return res.status(201).send();
