@@ -6,12 +6,17 @@ const { onUpdateTrigger } = require("../../../knexfile");
 
 exports.up = async (knex) => {
   await knex.schema
-    .createTable("users", function (table) {
+    .createTable("projects", (table) => {
       table.increments("id");
-      table.text("username").unique().notNullable();
+      table.text("title");
 
-      table.timestamp("create_at").defaultTo(knex.fn.now());
-      table.timestamp("update_at").defaultTo(knex.fn.now());
+      table
+        .integer("user_id")
+        .references("users.id")
+        .notNullable()
+        .onDelete("CASCADE");
+
+      table.timestamps(true, true);
     })
     .then(() => knex.raw(onUpdateTrigger("users")));
 };
@@ -20,6 +25,4 @@ exports.up = async (knex) => {
  * @param { import("knex").Knex } knex
  * @returns { Promise<void> }
  */
-exports.down = async function (knex) {
-  await knex.schema.dropTable("users");
-};
+exports.down = (knex) => knex.schema.dropTable("projects");
